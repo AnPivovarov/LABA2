@@ -92,7 +92,7 @@
                       Background="White" 
                       Foreground="Black"
                       IsReadOnly="True"
-                      Visibility="Visible">
+                      Visibility="Hidden">
 
                 <DataGrid.Columns >
                     <DataGridTextColumn FontFamily="Bahnschrift Light" Header="Идентификатор угрозы" Binding="{Binding ThreatID}"/>
