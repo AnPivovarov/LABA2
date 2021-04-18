@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,14 @@ namespace LABA2
     /// </summary>
     public partial class NewDataWindow : Window
     {
+        static Paging PagedTable = new Paging();
         public NewDataWindow()
         {
             InitializeComponent();
+            DataTable firstTable = PagedTable.SetPaging(MainWindow.threatsBefore, MainWindow.threatsBefore.Count);
+            ThreatsBeforeDataGrid.ItemsSource = firstTable.DefaultView;
+            DataTable secondTable = PagedTable.SetPaging(MainWindow.threatsAfter, MainWindow.threatsAfter.Count);
+            ThreatsAfterDataGrid.ItemsSource = secondTable.DefaultView;
         }
 
         private void NDWindow_MouseDown(object sender, MouseButtonEventArgs e)

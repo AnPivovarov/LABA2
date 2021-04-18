@@ -69,20 +69,147 @@
 
 
 
-            <TextBlock Grid.Row="2"
+            <TextBlock Grid.Row="1"
                        Grid.Column="1"
-                       Grid.ColumnSpan="2"
-                       Margin="0,20,0,20"
+                       Margin="20,20,0,5"
                        FontFamily="Bahnschrift Light"
-                       FontSize="24" 
+                       FontSize="20" 
                        Foreground="#FFCCD9DD" 
                        VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
                        TextAlignment="Center"
                        TextWrapping="Wrap"
-                       x:Name="UpdateText">
-
+                       HorizontalAlignment="Left"
+                       >
+                Было:
             </TextBlock>
+
+            <DataGrid Name="ThreatsBeforeDataGrid" 
+                      Margin="10,0,10,0"
+                      Grid.Column="1"
+                      Grid.Row="2"
+                      Height="120"  
+                      VerticalScrollBarVisibility="Visible"
+                      AutoGenerateColumns="False" 
+                      Background="White" 
+                      Foreground="Black"
+                      IsReadOnly="True"
+                      Visibility="Visible">
+
+                <DataGrid.Columns >
+                    <DataGridTextColumn FontFamily="Bahnschrift Light" Header="Идентификатор угрозы" Binding="{Binding ThreatID}"/>
+                    <DataGridTextColumn x:Name="SecondColumn" FontFamily="Bahnschrift Light" Header="Наименование угрозы" Binding="{Binding ThreatName}" />
+                </DataGrid.Columns>
+
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <DockPanel Background="White">
+                            <Grid Margin="0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="800"/>
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Описание угрозы: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="2" FontWeight="Bold" VerticalAlignment="Top" Margin="3,0,0,0"/>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding ThreatDescription}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" />
+                                <TextBlock Text="Источник угрозы: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="3" FontWeight="Bold" Margin="3,5,0,0" VerticalAlignment="Top"/>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding ThreatSource}" Grid.Row="3" Grid.Column="1" Margin="0,5,0,0" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="Объект воздействия угрозы: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="4" FontWeight="Bold" Margin="3,5,0,0" VerticalAlignment="Top"/>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding ThreatObject}" Grid.Row="4" Grid.Column="1" Margin="0,5,0,0" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="Нарушение конфиденциальности: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="5" FontWeight="Bold" Margin="3,5,0,0" VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding ThreatConf}" Grid.Row="5" Grid.Column="1" Margin="0,5,0,0" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="Нарушение целостности: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="6" FontWeight="Bold" Margin="3,5,0,0" VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding ThreatInteg}" Grid.Row="6" Grid.Column="1" Margin="0,5,0,0" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="Нарушение доступа: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="7" FontWeight="Bold" Margin="3,5,0,0" VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding ThreatAccess}" Grid.Row="7" Grid.Column="1" Margin="0,5,0,0" VerticalAlignment="Bottom"/>
+
+                            </Grid>
+                        </DockPanel>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
+
+            </DataGrid>
+
+            <TextBlock Grid.Row="3"
+                       Grid.Column="1"
+                       Margin="20,20,0,5"
+                       FontFamily="Bahnschrift Light"
+                       FontSize="20" 
+                       Foreground="#FFCCD9DD" 
+                       VerticalAlignment="Center"
+                       TextAlignment="Center"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Left"
+                       >
+                Стало:
+            </TextBlock>
+            
+            <DataGrid Name="ThreatsAfterDataGrid" 
+                      Margin="10,0,10,0"
+                      Grid.Column="1"
+                      Grid.Row="4"
+                      Height="120"  
+                      AutoGenerateColumns="False" 
+                      Background="White" 
+                      VerticalScrollBarVisibility="Visible"
+
+                      Foreground="Black"
+                      IsReadOnly="True"
+                      Visibility="Visible">
+
+                <DataGrid.Columns >
+                    <DataGridTextColumn FontFamily="Bahnschrift Light" Header="Идентификатор угрозы" Binding="{Binding ThreatID}"/>
+                    <DataGridTextColumn FontFamily="Bahnschrift Light" Header="Наименование угрозы" Binding="{Binding ThreatName}" />
+                </DataGrid.Columns>
+
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <DockPanel Background="White">
+                            <Grid Margin="0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="800"/>
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Описание угрозы: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="2" FontWeight="Bold" VerticalAlignment="Top" Margin="3,0,0,0"/>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding ThreatDescription}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" />
+                                <TextBlock Text="Источник угрозы: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="3" FontWeight="Bold" Margin="3,5,0,0" VerticalAlignment="Top"/>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding ThreatSource}" Grid.Row="3" Grid.Column="1" Margin="0,5,0,0" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="Объект воздействия угрозы: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="4" FontWeight="Bold" Margin="3,5,0,0" VerticalAlignment="Top"/>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding ThreatObject}" Grid.Row="4" Grid.Column="1" Margin="0,5,0,0" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="Нарушение конфиденциальности: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="5" FontWeight="Bold" Margin="3,5,0,0" VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding ThreatConf}" Grid.Row="5" Grid.Column="1" Margin="0,5,0,0" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="Нарушение целостности: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="6" FontWeight="Bold" Margin="3,5,0,0" VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding ThreatInteg}" Grid.Row="6" Grid.Column="1" Margin="0,5,0,0" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="Нарушение доступа: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="7" FontWeight="Bold" Margin="3,5,0,0" VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding ThreatAccess}" Grid.Row="7" Grid.Column="1" Margin="0,5,0,0" VerticalAlignment="Bottom"/>
+
+                            </Grid>
+                        </DockPanel>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
+
+            </DataGrid>
+
 
         </Grid>
     </Border>

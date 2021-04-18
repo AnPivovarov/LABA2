@@ -35,8 +35,8 @@ namespace LABA2
         IEnumerable<Threat> threats = null;
         IEnumerable<Threat> threatsNew = null;
 
-        List<Threat> threatsBefore = new List<Threat>();
-        List<Threat> threatsAfter = new List<Threat>();
+        public static List<Threat> threatsBefore = new List<Threat>();
+        public static List<Threat> threatsAfter = new List<Threat>();
         public MainWindow()
         {
 
@@ -119,6 +119,14 @@ namespace LABA2
                     count++;
                 }
             }
+            if (threatsList.Count < threatsNewList.Count)
+            {
+                for (int i = threatsList.Count; i < threatsNewList.Count; i++)
+                {
+                    threatsAfter.Add(threatsNewList[i]);
+                    count++;
+                }
+            }
             if (count == 0)
             {
                 UpdateFail uf = new UpdateFail();
@@ -130,13 +138,7 @@ namespace LABA2
                 us.UpdateText.Text = $"Обновлено следующее количество записей: {count}";
                 us.Show();
             }
-            if (threatsList.Count < threatsNewList.Count)
-            {
-                for (int i = threatsList.Count; i < threatsNewList.Count; i++)
-                {
-                    threatsAfter.Add(threatsNewList[i]);
-                }
-            }
+
 
             threats = XLSXImport.EnumerateThreats("thrlist.xlsx").ToList();
             PagedTable.PageIndex = 0;
