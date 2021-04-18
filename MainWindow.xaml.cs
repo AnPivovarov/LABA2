@@ -19,6 +19,7 @@ using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.Win32;
 using System.Net;
+using System.Net.NetworkInformation;
 
 namespace LABA2
 {
@@ -98,53 +99,74 @@ namespace LABA2
 
         }
 
+        private static bool CheckInternet()
+        {
+            try
+            {
+                return new Ping().Send("google.com").Status == IPStatus.Success ? true : false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            threats = XLSXImport.EnumerateThreats("thrlist.xlsx").ToList();
-            WebClient webClient = new WebClient();
-            webClient.DownloadFile("https://bdu.fstec.ru/files/documents/thrlist.xlsx", "thrlist.xlsx");
-            threatsNew = XLSXImport.EnumerateThreats("thrlist.xlsx").ToList();
+            if (CheckInternet() == true)
+            {
+                threats = XLSXImport.EnumerateThreats("thrlist.xlsx").ToList();
+                WebClient webClient = new WebClient();
+                webClient.DownloadFile("https://bdu.fstec.ru/files/documents/thrlist.xlsx", "thrlist.xlsx");
+                threatsNew = XLSXImport.EnumerateThreats("thrlist.xlsx").ToList();
 
-            List<Threat> threatsList = threats.ToList();
-            List<Threat> threatsNewList = threatsNew.ToList();
+                List<Threat> threatsList = threats.ToList();
+                List<Threat> threatsNewList = threatsNew.ToList();
 
-            int count = 0;
-            for (int i = 0; i < threatsList.Count; i++)
-            {
-                if (!threatsList[i].Equals(threatsNewList[i]))
+                int count = 0;
+                for (int i = 0; i < threatsList.Count; i++)
                 {
-                    isUpdated = true;
-                    threatsBefore.Add(threatsList[i]);
-                    threatsAfter.Add(threatsNewList[i]);
-                    count++;
+                    if (!threatsList[i].Equals(threatsNewList[i]))
+                    {
+                        isUpdated = true;
+                        threatsBefore.Add(threatsList[i]);
+                        threatsAfter.Add(threatsNewList[i]);
+                        count++;
+                    }
                 }
-            }
-            if (threatsList.Count < threatsNewList.Count)
-            {
-                for (int i = threatsList.Count; i < threatsNewList.Count; i++)
+                if (threatsList.Count < threatsNewList.Count)
                 {
-                    threatsAfter.Add(threatsNewList[i]);
-                    count++;
+                    for (int i = threatsList.Count; i < threatsNewList.Count; i++)
+                    {
+                        threatsAfter.Add(threatsNewList[i]);
+                        count++;
+                    }
                 }
-            }
-            if (count == 0)
-            {
-                UpdateFail uf = new UpdateFail();
-                uf.Show();
+                if (count == 0)
+                {
+                    UpdateFail uf = new UpdateFail();
+                    uf.Show();
+                }
+                else
+                {
+                    UpdateSuccess us = new UpdateSuccess();
+                    us.UpdateText.Text = $"Обновлено следующее количество записей: {count}";
+                    us.Show();
+                }
+
+
+                threats = XLSXImport.EnumerateThreats("thrlist.xlsx").ToList();
+                PagedTable.PageIndex = 0;
+                DataTable firstTable = PagedTable.SetPaging(threats, numberOfRecPerPage);
+                ThreatsDataGrid.ItemsSource = firstTable.DefaultView;
+                PageInfoLabel.Content = PageNumberDisplay();
             }
             else
             {
-                UpdateSuccess us = new UpdateSuccess();
-                us.UpdateText.Text = $"Обновлено следующее количество записей: {count}";
-                us.Show();
+                UpdateFail uf = new UpdateFail();
+                uf.UpdateText.Text = "Проверьте подключение к интернету!";
+                uf.Show();
             }
-
-
-            threats = XLSXImport.EnumerateThreats("thrlist.xlsx").ToList();
-            PagedTable.PageIndex = 0;
-            DataTable firstTable = PagedTable.SetPaging(threats, numberOfRecPerPage);
-            ThreatsDataGrid.ItemsSource = firstTable.DefaultView;
-            PageInfoLabel.Content = PageNumberDisplay();
 
 
         }
