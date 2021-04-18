@@ -1,0 +1,341 @@
+﻿<Window x:Class="LABA2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LABA2"
+        mc:Ignorable="d"
+        Title="LABA2" Height="500" Width="900"
+        Background="Transparent"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize" 
+        AllowsTransparency="True" 
+        FontFamily="Bahnschrift Light"
+        MouseDown="Window_MouseDown"
+        >
+    <Border Background="#212121" BorderBrush="#FF000000" BorderThickness="1" CornerRadius="10" >
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="1" Grid.Column="2" 
+                       FontFamily="Bahnschrift Light"
+                       FontSize="20" 
+                       Foreground="#FFCCD9DD" 
+                       VerticalAlignment="Center">
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="#FF6760D0" 
+                                      BlurRadius="10" 
+                                      Direction="120"/>
+                </TextBlock.Effect>
+            Банк данных угроз ФСТЭК России
+            </TextBlock>
+            <Image Grid.Row="1" 
+                   Grid.Column="1" 
+                   Source="/Images/Logo.png"
+                   Width="60" 
+                   Stretch="Fill"/>
+            
+            <Button Grid.Column="4"
+                    Grid.Row="5" 
+                    x:Name="CloseButton"
+                    Content="Выход" 
+                    Click="CloseButton_Click"
+                    Foreground="White"
+                    FontSize="14"
+                    FontWeight="Medium"
+                    >
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="TextElement.FontFamily" Value="Bahnschrift Light"/>
+                        <Setter Property="Background" Value="#FE6584"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF4C70"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="80" Height="20" CornerRadius="12" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            
+            </Button>
+            <DataGrid Name="ThreatsDataGrid" 
+                      Margin="10"
+                      Grid.Column="1"
+                      Grid.Row="2"
+                      Grid.ColumnSpan="3"
+                      Grid.RowSpan="3"
+                      AutoGenerateColumns="False" 
+                      Background="White" 
+                      Foreground="Black"
+                      IsReadOnly="True"
+                      Visibility="Visible">
+
+                <DataGrid.Columns >
+                    <DataGridTextColumn FontFamily="Bahnschrift Light" Header="Идентификатор угрозы" Binding="{Binding ThreatID}"/>
+                    <DataGridTextColumn x:Name="SecondColumn" FontFamily="Bahnschrift Light" Header="Наименование угрозы" Binding="{Binding ThreatName}" />
+                </DataGrid.Columns>
+
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <DockPanel Background="White">
+                            <Grid Margin="0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="800"/>
+                                  
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Описание угрозы: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="2" FontWeight="Bold" VerticalAlignment="Top" Margin="3,0,0,0"/>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding ThreatDescription}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" />
+                                <TextBlock Text="Источник угрозы: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="3" FontWeight="Bold" Margin="3,5,0,0" VerticalAlignment="Top"/>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding ThreatSource}" Grid.Row="3" Grid.Column="1" Margin="0,5,0,0" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="Объект воздействия угрозы: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="4" FontWeight="Bold" Margin="3,5,0,0" VerticalAlignment="Top"/>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding ThreatObject}" Grid.Row="4" Grid.Column="1" Margin="0,5,0,0" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="Нарушение конфиденциальности: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="5" FontWeight="Bold" Margin="3,5,0,0" VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding ThreatConf}" Grid.Row="5" Grid.Column="1" Margin="0,5,0,0" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="Нарушение целостности: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="6" FontWeight="Bold" Margin="3,5,0,0" VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding ThreatInteg}" Grid.Row="6" Grid.Column="1" Margin="0,5,0,0" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="Нарушение доступа: " FontFamily="Bahnschrift Light" FontSize="14" Grid.Row="7" FontWeight="Bold" Margin="3,5,0,0" VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding ThreatAccess}" Grid.Row="7" Grid.Column="1" Margin="0,5,0,0" VerticalAlignment="Bottom"/>
+
+                            </Grid>
+                        </DockPanel>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
+                
+            </DataGrid>
+
+            <Button Grid.Column="2"
+                    Grid.Row="5" 
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    x:Name="PrevPageButton"
+                    Foreground="Black"
+                    FontSize="18"
+                    FontWeight="Medium"
+                    Content="&lt;" 
+                    Click="PrevPageButton_Click"
+                    Visibility="Hidden"
+                    Margin="60,0,0,0"
+                    >
+              
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="TextElement.FontFamily" Value="Bahnschrift Light"/>
+                        <Setter Property="Background" Value="#FFE7E7E7"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Silver"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="30" Height="20" CornerRadius="8" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+
+            </Button>
+
+            <Label x:Name="PageInfoLabel"
+                   Grid.Column="2"
+                   Grid.Row="5"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Center"
+                   Height="30"
+                   Width="80" Foreground="#FFE7E7E7"
+                   HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Top"
+                   FontSize="14"
+                   />
+
+
+            <Button Grid.Column="2"
+                    Grid.Row="5" 
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right"
+                    x:Name="NextPageButton"
+                    Foreground="Black"
+                    FontSize="18"
+                    FontWeight="Medium"
+                    Content="&gt;" 
+                    Click="NextPageButton_Click"
+                    Visibility="Hidden"
+                    Margin="0,0,60,0"
+                    >
+
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="TextElement.FontFamily" Value="Bahnschrift Light"/>
+                        <Setter Property="Background" Value="#FFE7E7E7"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Silver"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="30" Height="20" CornerRadius="8" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+
+            </Button>
+
+
+            <Button Grid.Column="4"
+                    Grid.Row="2" 
+                    VerticalAlignment="Top"
+                    Margin="0,10,0,0"
+                    x:Name="UploadButton"
+                     
+                    Click="UploadButton_Click"
+                    Foreground="White"
+                    FontSize="14"
+                    FontWeight="Medium"
+                    >
+                <TextBlock TextAlignment="Center"
+                           TextWrapping="Wrap"
+                           Text="Загрузить таблицу"/>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="TextElement.FontFamily" Value="Bahnschrift Light"/>
+                        <Setter Property="Background" Value="#FF777777"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF434343"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="100" Height="40" CornerRadius="10" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+
+            </Button>
+
+            <Button Grid.Column="4"
+                    Grid.Row="3" 
+                    VerticalAlignment="Top"
+                    Margin="0,10,0,0"
+                    x:Name="UpdateButton"                     
+                    Click="UpdateButton_Click"
+                    Foreground="White"
+                    FontSize="14"
+                    FontWeight="Medium"
+                    IsEnabled="False"
+                    >
+                <TextBlock TextAlignment="Center"
+                           TextWrapping="Wrap"
+                           Text="Обновить данные"/>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="TextElement.FontFamily" Value="Bahnschrift Light"/>
+                        <Setter Property="Background" Value="#FF777777"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF434343"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="100" Height="40" CornerRadius="10" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+
+            </Button>
+
+            <Button Grid.Column="4"
+                    Grid.Row="4" 
+                    VerticalAlignment="Top"
+                    Margin="0,10,0,0"
+                    x:Name="SaveButton"                     
+                    Click="SaveButton_Click"
+                    Foreground="White"
+                    FontSize="14"
+                    FontWeight="Medium"
+                    IsEnabled="False"
+                    >
+                <TextBlock TextAlignment="Center"
+                           TextWrapping="Wrap"
+                           Text="Сохранить файл"/>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="TextElement.FontFamily" Value="Bahnschrift Light"/>
+                        <Setter Property="Background" Value="#FF777777"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF434343"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="100" Height="40" CornerRadius="10" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+
+            </Button>
+        </Grid>
+    </Border>
+</Window>
